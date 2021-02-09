@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="lib/style.css">
+</head>
+<body>
+    <div data-role="page" class="justify-center" id="pageLogin">
+        <div style="margin-top: 10px; text-align: center;">
+            <img src="assets\login.png" style="height: 100px;width:100px;" alt="">
+        </div>
+        <div style="padding: 15px; margin: auto; justify-content: center; text-align: center;">
+       <form action="post" id="formLogin">
+                    
+        
+        <input type="text" placeholder="Cpf, apenas numeros" class="textInput" name="textUser" id="textUsuario" value="">
+
+        
+        
+        <input type="password"placeholder="Senha" name="textPassword" id="textPassword" value="">
+
+        <button class="ui-shadow ui-btn ui-corner-all "> Login </button>
+
+       </form>
+       <a href="#pageCadastroUser">Não tem Cadastro ?</a>
+
+       <div data-role="popup" id="popupMsg" data-overlay-theme="b" data-transition="turn" data-theme="a" data-tolerance="15,15" class="ui-content">
+ 
+        Usuário ou senha incorretos
+        
+        </div>
+       
+    </div>
+    </div>
+    <div data-role="page" class="justify-center" id="pageCadastroUser">
+        <div style="margin-top: 10px; text-align: center;">
+            <img src="assets\login.png" style="height: 100px;width:100px;" alt="">
+            
+        </div>
+        
+        <div style="padding: 15px; margin: auto; justify-content: center; text-align: center;">
+            <span ><h3 id="msgerror" style="color: orangered;"></h3></span>
+       <form action="post" id="formCadastro">
+                    
+        
+        <input type="text" placeholder="Informe seu nome completo" class="textInput" name="textName" id="textName" value="">
+        <input type="text" placeholder="Cpf, apenas numeros" class="textInput" name="textCpf" id="textCpf" value="">
+        <input type="text" placeholder="Fone (xx) 9xxxx-xxxx" class="textInput" name="textFone" id="textFone" value="">
+        <input type="password"placeholder="Senha" name="textPassword" id="textPassword" value="">
+
+        <button class="ui-shadow ui-btn ui-corner-all "> Cadastrar </button>
+
+       </form>
+       
+       
+
+    </div>
+    </div>
+<script>
+
+    $("#formLogin").submit(function(e){
+        e.preventDefault();
+        var dados = $(this).serialize();
+        var url = "controller/auth.php";
+        $.ajax({
+            url:url,
+            type:"post",
+            data:dados,
+            success:function(response){
+                jsonDados = JSON.parse((response))
+                  var [cod] = jsonDados;
+                
+                if (cod == "ok"){
+                    window.location.href = "view/profile.php"
+                }else{
+                    $("#popupMsg").popup("open");
+                }
+            }
+            
+        })
+    })
+    $("#formCadastro").submit(function(e){
+        e.preventDefault();
+        var dados = $(this).serialize();
+        var url = "controller/auth.php";
+        $.ajax({
+            url:url,
+            type:"post",
+            
+            data:dados,
+            success:function(response){
+                  jsonDados = JSON.parse((response))
+                  var [cod] = jsonDados;
+                
+                if (cod == "ok"){
+                    window.location.href = "view/profile.php"
+                }
+                if (cod==23000) {
+                    $("#msgerror").html("Usuário já exite")
+                }
+                
+            }
+            
+        })
+    })
+
+</script>
+</body>
+</html>

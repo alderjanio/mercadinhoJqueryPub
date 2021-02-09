@@ -1,0 +1,21 @@
+.textInput {
+margin: auto;
+padding: 5;
+border:1px solid #ff8811;
+}
+.divHeader{
+    color: white;
+    background-color: #1853f3;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 12px;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+.liPersonal li{
+    margin-bottom: 5px;
+    padding: 5px;
+    border: solid blueviolet 1px;
+    border-radius: 5px;
+}
